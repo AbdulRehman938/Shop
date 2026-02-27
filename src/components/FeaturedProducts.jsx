@@ -1,5 +1,7 @@
+import { motion } from "framer-motion";
 import { HiOutlineHeart, HiHeart, HiArrowSmRight } from "react-icons/hi";
 import { useState } from "react";
+import { T } from "../context/TranslationContext";
 
 const featuredProducts = [
   {
@@ -42,90 +44,91 @@ const featuredProducts = [
 
 const FeaturedProducts = () => {
   const [wishlist, setWishlist] = useState({});
-
-  const toggleWishlist = (id) => {
+  const toggleWishlist = (id) =>
     setWishlist((prev) => ({ ...prev, [id]: !prev[id] }));
-  };
 
   return (
     <section className="py-24 bg-white overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
-          <div>
+          <motion.div
+            initial={{ opacity: 0, x: -50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
             <span className="text-amber-500 font-black uppercase tracking-widest text-sm">
-              Best Sellers
+              <T>Best Sellers</T>
             </span>
             <h2 className="text-4xl md:text-5xl font-black text-secondary mt-2">
-              Featured Products
+              <T>Featured Products</T>
             </h2>
-          </div>
-          <button className="flex items-center gap-2 text-amber-600 font-bold hover:gap-3 transition-all whitespace-nowrap">
-            View All Products <HiArrowSmRight className="text-xl" />
-          </button>
+          </motion.div>
+          <motion.button
+            whileHover={{ x: 10 }}
+            className="flex items-center gap-2 text-amber-600 font-bold hover:gap-3 transition-all whitespace-nowrap"
+          >
+            <T>View All Products</T> <HiArrowSmRight className="text-xl" />
+          </motion.button>
         </div>
 
         <div className="relative group">
-          <div className="flex overflow-x-auto gap-6 sm:gap-8 pb-12 hide-scrollbar snap-x">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="flex overflow-x-auto gap-6 sm:gap-8 pb-12 hide-scrollbar snap-x"
+          >
             {featuredProducts.map((product) => (
-              <div
+              <motion.div
                 key={product.id}
+                whileHover={{ y: -10 }}
                 className="flex-none w-[280px] sm:w-72 snap-start group/card"
               >
                 <div className="relative aspect-square rounded-3xl overflow-hidden bg-gray-50 mb-6 group-hover/card:shadow-2xl transition-all duration-500 border border-gray-100">
-                  <img
+                  <motion.img
+                    whileHover={{ scale: 1.1 }}
+                    transition={{ duration: 0.6 }}
                     src={product.image}
                     alt={product.name}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover/card:scale-110"
+                    className="w-full h-full object-cover"
                     loading="lazy"
                   />
 
-                  {/* Overlay */}
-                  <div className="absolute inset-0 bg-black/5 opacity-0 group-hover/card:opacity-100 transition-opacity"></div>
+                  <div className="absolute inset-x-4 bottom-4 z-10">
+                    <motion.button
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      className="w-full py-3.5 bg-secondary text-white rounded-2xl font-black text-sm uppercase tracking-wider shadow-xl hover:bg-black transition-colors opacity-0 group-hover/card:opacity-100 translate-y-4 group-hover/card:translate-y-0 duration-300"
+                    >
+                      <T>Quick View</T>
+                    </motion.button>
+                  </div>
 
-                  {/* Wishlist Button */}
                   <button
                     onClick={() => toggleWishlist(product.id)}
-                    className="absolute top-4 right-4 h-11 w-11 bg-white/90 backdrop-blur-md rounded-full flex items-center justify-center shadow-lg transform translate-y-2 opacity-0 group-hover/card:opacity-100 group-hover/card:translate-y-0 transition-all duration-300 hover:bg-white"
+                    className="absolute top-4 right-4 h-11 w-11 bg-white/90 backdrop-blur-md rounded-full flex items-center justify-center shadow-lg"
                   >
                     {wishlist[product.id] ? (
-                      <HiHeart className="h-6 w-6 text-red-500 scale-110" />
+                      <HiHeart className="h-6 w-6 text-red-500" />
                     ) : (
-                      <HiOutlineHeart className="h-6 w-6 text-gray-500 hover:text-red-500" />
+                      <HiOutlineHeart className="h-6 w-6 text-gray-500" />
                     )}
                   </button>
-
-                  <div className="absolute inset-x-4 bottom-4 translate-y-10 opacity-0 group-hover/card:opacity-100 group-hover/card:translate-y-0 transition-all duration-500">
-                    <button className="w-full py-3.5 bg-secondary text-white rounded-2xl font-black text-sm uppercase tracking-wider shadow-xl hover:bg-black transition-colors">
-                      Quick View
-                    </button>
-                  </div>
                 </div>
 
                 <h3 className="text-xl font-bold text-secondary mb-2 group-hover/card:text-amber-500 transition-colors uppercase tracking-tight truncate">
-                  {product.name}
+                  <T>{product.name}</T>
                 </h3>
                 <div className="flex items-center justify-between">
                   <p className="text-amber-600 font-black text-xl">
-                    {product.price}
+                    <T>{product.price}</T>
                   </p>
-                  <div className="flex gap-1">
-                    <div className="w-3 h-3 rounded-full bg-amber-500"></div>
-                    <div className="w-3 h-3 rounded-full bg-gray-300"></div>
-                  </div>
                 </div>
-              </div>
+              </motion.div>
             ))}
-          </div>
-
-          {/* Nav buttons for desktop (visual only for now) */}
-          <div className="hidden lg:flex absolute top-1/2 -translate-y-1/2 -left-6 -right-6 justify-between pointer-events-none">
-            <div className="h-12 w-12 bg-white rounded-full shadow-xl flex items-center justify-center pointer-events-auto cursor-pointer border border-gray-100 opacity-0 group-hover:opacity-100 transition-opacity rotate-180">
-              <HiArrowSmRight className="text-xl" />
-            </div>
-            <div className="h-12 w-12 bg-white rounded-full shadow-xl flex items-center justify-center pointer-events-auto cursor-pointer border border-gray-100 opacity-0 group-hover:opacity-100 transition-opacity">
-              <HiArrowSmRight className="text-xl" />
-            </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>

@@ -1,4 +1,6 @@
+import { motion } from "framer-motion";
 import { HiArrowRight } from "react-icons/hi";
+import { T } from "../context/TranslationContext";
 
 const categories = [
   {
@@ -34,44 +36,75 @@ const categories = [
   },
 ];
 
+const cardVariants = {
+  hidden: { opacity: 0, y: 50 },
+  visible: (i) => ({
+    opacity: 1,
+    y: 0,
+    transition: {
+      delay: i * 0.1,
+      duration: 0.6,
+      ease: "easeOut",
+    },
+  }),
+};
+
 const ProductCategories = () => {
   return (
     <section id="products" className="py-24 bg-amber-50/50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="section-title">Product Categories</h2>
+        <motion.h2
+          initial={{ opacity: 0, scale: 0.9 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          className="section-title"
+        >
+          <T>Product Categories</T>
+        </motion.h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
           {categories.map((category, index) => (
-            <div
+            <motion.div
               key={index}
+              custom={index}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-50px" }}
+              variants={cardVariants}
+              whileHover={{ y: -10 }}
               className="premium-card group bg-white border border-gray-100 flex flex-col h-full"
             >
               <div className="relative h-64 overflow-hidden">
-                <img
+                <motion.img
+                  whileHover={{ scale: 1.1 }}
+                  transition={{ duration: 0.8 }}
                   src={category.image}
                   alt={category.name}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                  className="w-full h-full object-cover"
                   loading="lazy"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
                   <span className="text-white font-bold flex items-center gap-2">
-                    View Collection <HiArrowRight />
+                    <T>View Collection</T> <HiArrowRight />
                   </span>
                 </div>
               </div>
               <div className="p-8 flex-grow flex flex-col">
-                <h3 className="text-2xl font-black text-secondary mb-3 group-hover:text-amber-500 transition-colors">
-                  {category.name}
+                <h3 className="text-2xl font-black text-secondary mb-3 group-hover:text-amber-500 transition-colors uppercase">
+                  <T>{category.name}</T>
                 </h3>
                 <p className="text-gray-600 mb-6 leading-relaxed flex-grow">
-                  {category.description}
+                  <T>{category.description}</T>
                 </p>
-                <button className="text-amber-600 font-bold flex items-center gap-2 hover:gap-4 transition-all uppercase tracking-widest text-sm group-hover:text-amber-700">
-                  Shop Now
+                <motion.button
+                  whileHover={{ x: 5 }}
+                  className="text-amber-600 font-bold flex items-center gap-2 uppercase tracking-widest text-sm group-hover:text-amber-700"
+                >
+                  <T>Shop Now</T>
                   <HiArrowRight className="text-xl" />
-                </button>
+                </motion.button>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>
