@@ -1,0 +1,67 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+@layer utilities {
+  .animate-fade-in-down {
+    animation: fade-in-down 0.5s ease-out;
+  }
+}
+
+@keyframes fade-in-down {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.premium-card {
+  @apply bg-white rounded-2xl shadow-[0_10px_40px_-15px_rgba(0,0,0,0.1)] overflow-hidden transition-all duration-500 hover:shadow-[0_20px_60px_-15px_rgba(245,158,11,0.3)] hover:-translate-y-2 border border-gray-100;
+}
+
+.btn-primary {
+  @apply bg-amber-500 hover:bg-amber-600 text-white font-bold py-4 px-10 rounded-full transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-xl hover:shadow-amber-500/50;
+}
+
+.section-title {
+  @apply text-3xl md:text-5xl font-black text-secondary mb-16 text-center relative;
+}
+
+.section-title::after {
+  content: '';
+  @apply absolute -bottom-4 left-1/2 -translate-x-1/2 w-24 h-2 bg-amber-500 rounded-full;
+}
+
+/* Custom scrollbar for horizontal product list */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
