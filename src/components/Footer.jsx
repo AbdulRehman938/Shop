@@ -10,7 +10,7 @@ import { T, useTranslation } from "../context/TranslationContext";
 import { useState, useEffect } from "react";
 
 const Footer = () => {
-  const { t } = useTranslation();
+  const { t, lang } = useTranslation();
   const [emailPlaceholder, setEmailPlaceholder] = useState("Your email");
 
   useEffect(() => {
@@ -29,7 +29,7 @@ const Footer = () => {
                 className="h-20 w-auto brightness-0 invert transition-transform hover:scale-105"
               />
             </Link>
-            <p className="text-gray-400 leading-relaxed text-lg">
+            <p className="text-gray-400 leading-relaxed text-lg text-start">
               <T>
                 Al Rehman Trunk Store: Providing strength, style, and utility to
                 Pakistani homes for over 30 years. Quality you can trust.
@@ -56,7 +56,7 @@ const Footer = () => {
           </div>
 
           <div>
-            <h4 className="text-xl font-black mb-8 text-amber-500 uppercase tracking-widest pl-4 border-l-4 border-amber-500">
+            <h4 className="text-xl font-black mb-8 text-amber-500 uppercase tracking-widest ps-4 border-s-4 border-amber-500">
               <T>Quick Links</T>
             </h4>
             <ul className="space-y-4 text-lg">
@@ -70,7 +70,9 @@ const Footer = () => {
                     }
                     className="text-gray-400 hover:text-amber-500 transition-all flex items-center gap-2 group"
                   >
-                    <HiArrowSmRight className="opacity-0 group-hover:opacity-100 transition-all -ml-4 group-hover:ml-0" />
+                    <HiArrowSmRight
+                      className={`opacity-0 group-hover:opacity-100 transition-all -ms-4 group-hover:ms-0 ${lang === "ur" ? "rotate-180" : ""}`}
+                    />
                     <T>{item}</T>
                   </a>
                 </li>
@@ -79,7 +81,7 @@ const Footer = () => {
           </div>
 
           <div>
-            <h4 className="text-xl font-black mb-8 text-amber-500 uppercase tracking-widest pl-4 border-l-4 border-amber-500">
+            <h4 className="text-xl font-black mb-8 text-amber-500 uppercase tracking-widest ps-4 border-s-4 border-amber-500">
               <T>Shop Hours</T>
             </h4>
             <ul className="space-y-4 text-gray-400 text-lg">
@@ -101,7 +103,7 @@ const Footer = () => {
           </div>
 
           <div>
-            <h4 className="text-xl font-black mb-8 text-amber-500 uppercase tracking-widest pl-4 border-l-4 border-amber-500">
+            <h4 className="text-xl font-black mb-8 text-amber-500 uppercase tracking-widest ps-4 border-s-4 border-amber-500">
               <T>Newsletter</T>
             </h4>
             <p className="text-gray-400 mb-6 font-medium">
@@ -111,9 +113,9 @@ const Footer = () => {
               <input
                 type="email"
                 placeholder={emailPlaceholder}
-                className="w-full bg-white/5 border-2 border-white/10 rounded-2xl py-4 px-6 focus:border-amber-500 transition-all outline-none pr-14"
+                className="w-full bg-white/5 border-2 border-white/10 rounded-2xl py-4 px-6 focus:border-amber-500 transition-all outline-none pe-14"
               />
-              <button className="absolute right-2 top-2 bottom-2 aspect-square bg-amber-500 rounded-xl flex items-center justify-center hover:bg-amber-600 transition-all">
+              <button className="absolute inset-e-2 top-2 bottom-2 aspect-square bg-amber-500 rounded-xl flex items-center justify-center hover:bg-amber-600 transition-all">
                 <HiArrowSmRight className="text-2xl" />
               </button>
             </form>

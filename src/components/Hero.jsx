@@ -1,13 +1,17 @@
 import { motion } from "framer-motion";
 import { HiArrowSmDown, HiPlay } from "react-icons/hi";
-import { T } from "../context/TranslationContext";
+import { T, useTranslation } from "../context/TranslationContext";
 
 const Hero = () => {
+  const { lang } = useTranslation();
+
   return (
     <section className="relative h-[100svh] min-h-[700px] flex items-center pt-20 overflow-hidden bg-secondary">
       {/* Background Image Placeholder with premium overlay */}
       <div className="absolute inset-0 z-0 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-secondary via-secondary/80 to-transparent z-10"></div>
+        <div
+          className={`absolute inset-0 bg-gradient-to-${lang === "ur" ? "l" : "r"} from-secondary via-secondary/80 to-transparent z-10`}
+        ></div>
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-secondary z-10"></div>
         <motion.img
           initial={{ scale: 1.2 }}
@@ -86,7 +90,7 @@ const Hero = () => {
             </a>
             <button className="group flex items-center gap-4 text-white font-black py-5 px-8 transition-all hover:text-amber-500">
               <span className="flex items-center justify-center w-14 h-14 rounded-full border-2 border-white/20 group-hover:border-amber-500 group-hover:bg-amber-500/10 transition-all">
-                <HiPlay className="text-2xl ml-1" />
+                <HiPlay className="text-2xl ms-1" />
               </span>
               <T>Watch Story</T>
             </button>
@@ -109,8 +113,12 @@ const Hero = () => {
       </div>
 
       {/* Decorative radial glows */}
-      <div className="absolute -top-40 -left-40 w-96 h-96 bg-amber-500/20 blur-[150px] rounded-full z-0"></div>
-      <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-amber-500/5 blur-[150px] rounded-full z-0 translate-x-1/2 translate-y-1/2"></div>
+      <div
+        className={`absolute -top-40 ${lang === "ur" ? "-right-40" : "-left-40"} w-96 h-96 bg-amber-500/20 blur-[150px] rounded-full z-0`}
+      ></div>
+      <div
+        className={`absolute bottom-0 ${lang === "ur" ? "left-0 -translate-x-1/2" : "right-0 translate-x-1/2"} w-[500px] h-[500px] bg-amber-500/5 blur-[150px] rounded-full z-0 translate-y-1/2`}
+      ></div>
     </section>
   );
 };

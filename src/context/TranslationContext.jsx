@@ -12,9 +12,18 @@ export const useTranslation = () => {
 };
 
 export const TranslationProvider = ({ children }) => {
-  const [lang, setLang] = useState("ur"); // Default to Urdu as requested
+  const [lang, setLang] = useState(
+    localStorage.getItem("preferred_lang") || "ur",
+  );
+
+  useEffect(() => {
+    localStorage.setItem("preferred_lang", lang);
+    document.documentElement.setAttribute("lang", lang);
+    document.documentElement.setAttribute("dir", lang === "ur" ? "rtl" : "ltr");
+  }, [lang]);
 
   const t = async (text) => {
+    if (lang === "en") return text;
     return await translateText(text, lang);
   };
 
@@ -25,22 +34,36 @@ export const TranslationProvider = ({ children }) => {
   );
 };
 
-/**
- * A component that wraps text and translates it automatically.
- */
 export const T = ({ children }) => {
-  const { t } = useTranslation();
-  const [translated, setTranslated] = useState(
-    typeof children === "string" ? "" : children,
-  );
+  const { t, lang } = useTranslation();
+  const [translated, setTranslated] = useState("");
+  const [loading, setLoading] = useState(lang !== "en");
 
   useEffect(() => {
     if (typeof children === "string") {
-      t(children).then(setTranslated);
+      if (lang === "en") {
+        setTranslated(children);
+        setLoading(false);
+      } else {
+        setLoading(true);
+        t(children).then((res) => {
+          setTranslated(res);
+          setLoading(false);
+        });
+      }
     }
-  }, [children, t]);
+  }, [children, t, lang]);
 
   if (typeof children !== "string") return children;
+
+  if (loading && lang !== "en") {
+    return (
+      <span
+        className="skeleton-text"
+        style={{ width: `${children.length * 8}px`, maxWidth: "100%" }}
+      ></span>
+    );
+  }
 
   return <>{translated || children}</>;
 };

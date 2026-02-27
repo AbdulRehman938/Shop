@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { HiArrowRight } from "react-icons/hi";
-import { T } from "../context/TranslationContext";
+import { T, useTranslation } from "../context/TranslationContext";
 
 const categories = [
   {
@@ -50,6 +50,9 @@ const cardVariants = {
 };
 
 const ProductCategories = () => {
+  const { lang } = useTranslation();
+  const isUrdu = lang === "ur";
+
   return (
     <section id="products" className="py-24 bg-amber-50/50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -85,7 +88,8 @@ const ProductCategories = () => {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
                   <span className="text-white font-bold flex items-center gap-2">
-                    <T>View Collection</T> <HiArrowRight />
+                    <T>View Collection</T>{" "}
+                    <HiArrowRight className={isUrdu ? "rotate-180" : ""} />
                   </span>
                 </div>
               </div>
@@ -97,11 +101,13 @@ const ProductCategories = () => {
                   <T>{category.description}</T>
                 </p>
                 <motion.button
-                  whileHover={{ x: 5 }}
+                  whileHover={{ x: isUrdu ? -5 : 5 }}
                   className="text-amber-600 font-bold flex items-center gap-2 uppercase tracking-widest text-sm group-hover:text-amber-700"
                 >
                   <T>Shop Now</T>
-                  <HiArrowRight className="text-xl" />
+                  <HiArrowRight
+                    className={`text-xl ${isUrdu ? "rotate-180" : ""}`}
+                  />
                 </motion.button>
               </div>
             </motion.div>

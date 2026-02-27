@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { HiOutlineHeart, HiHeart, HiArrowSmRight } from "react-icons/hi";
 import { useState } from "react";
-import { T } from "../context/TranslationContext";
+import { T, useTranslation } from "../context/TranslationContext";
 
 const featuredProducts = [
   {
@@ -43,6 +43,7 @@ const featuredProducts = [
 ];
 
 const FeaturedProducts = () => {
+  const { lang, t } = useTranslation();
   const [wishlist, setWishlist] = useState({});
   const toggleWishlist = (id) =>
     setWishlist((prev) => ({ ...prev, [id]: !prev[id] }));
@@ -52,7 +53,7 @@ const FeaturedProducts = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
           <motion.div
-            initial={{ opacity: 0, x: -50 }}
+            initial={{ opacity: 0, x: lang === "ur" ? 50 : -50 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
@@ -65,7 +66,7 @@ const FeaturedProducts = () => {
             </h2>
           </motion.div>
           <motion.button
-            whileHover={{ x: 10 }}
+            whileHover={{ x: lang === "ur" ? -10 : 10 }}
             className="flex items-center gap-2 text-amber-600 font-bold hover:gap-3 transition-all whitespace-nowrap"
           >
             <T>View All Products</T> <HiArrowSmRight className="text-xl" />
@@ -108,7 +109,7 @@ const FeaturedProducts = () => {
 
                   <button
                     onClick={() => toggleWishlist(product.id)}
-                    className="absolute top-4 right-4 h-11 w-11 bg-white/90 backdrop-blur-md rounded-full flex items-center justify-center shadow-lg"
+                    className="absolute top-4 end-4 h-11 w-11 bg-white/90 backdrop-blur-md rounded-full flex items-center justify-center shadow-lg"
                   >
                     {wishlist[product.id] ? (
                       <HiHeart className="h-6 w-6 text-red-500" />
