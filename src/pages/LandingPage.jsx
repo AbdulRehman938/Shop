@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { gsap } from "gsap";
 import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 import Navbar from "../components/Navbar";
+import { useTranslation } from "../context/TranslationContext";
 import Hero from "../components/Hero";
 import ProductCategories from "../components/ProductCategories";
 import FeaturedProducts from "../components/FeaturedProducts";
@@ -12,6 +13,8 @@ import Footer from "../components/Footer";
 gsap.registerPlugin(ScrollToPlugin);
 
 const LandingPage = () => {
+  const { lang } = useTranslation();
+
   useEffect(() => {
     // GSAP Smooth Scroll for Anchor Links
     const handleAnchorClick = (e) => {
@@ -40,7 +43,11 @@ const LandingPage = () => {
   }, []);
 
   return (
-    <div className="min-h-screen" dir="rtl" lang="ur">
+    <div
+      className="min-h-screen"
+      dir={lang === "ur" ? "rtl" : "ltr"}
+      lang={lang}
+    >
       <Navbar />
       <main>
         <Hero />

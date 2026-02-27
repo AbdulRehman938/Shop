@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence, useScroll, useSpring } from "framer-motion";
 import { Link } from "react-router-dom";
-import { HiMenu, HiX } from "react-icons/hi";
-import { T } from "../context/TranslationContext";
+import { T, useTranslation } from "../context/TranslationContext";
+import { HiMenu, HiX, HiTranslate } from "react-icons/hi";
 
 const Navbar = () => {
+  const { lang, setLang } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const { scrollYProgress } = useScroll();
@@ -70,6 +71,18 @@ const Navbar = () => {
               >
                 <T>Inquire</T>
               </motion.a>
+
+              <button
+                onClick={() => setLang(lang === "ur" ? "en" : "ur")}
+                className={`p-3 rounded-2xl transition-all duration-300 flex items-center gap-2 font-black text-xs uppercase tracking-widest ${
+                  scrolled
+                    ? "bg-secondary text-white hover:bg-secondary/90"
+                    : "bg-white/10 text-white hover:bg-white/20 backdrop-blur-md"
+                }`}
+              >
+                <HiTranslate className="text-lg" />
+                {lang === "ur" ? "EN" : "UR"}
+              </button>
             </div>
 
             <div className="md:hidden">
@@ -116,6 +129,17 @@ const Navbar = () => {
               >
                 <T>Inquire Now</T>
               </a>
+
+              <button
+                onClick={() => {
+                  setLang(lang === "ur" ? "en" : "ur");
+                  setIsOpen(false);
+                }}
+                className="flex items-center justify-center gap-4 p-8 rounded-[2rem] bg-gray-100 text-secondary font-black text-2xl uppercase tracking-widest transition-all active:scale-95"
+              >
+                <HiTranslate className="text-3xl" />
+                {lang === "ur" ? "English" : "اردو"}
+              </button>
             </div>
           </motion.div>
         )}

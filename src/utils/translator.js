@@ -23,10 +23,11 @@ const processQueue = async () => {
       const result = await performTranslation(text, targetLang);
       resolve(result);
     } catch (err) { resolve(text); }
-    await new Promise(r => setTimeout(r, 500)); 
+    await new Promise(r => setTimeout(r, 200)); 
   }
   isProcessingQueue = false;
 };
+
 
 const performTranslation = async (text, targetLang) => {
   // 1. Try Google & MyMemory (GET requests, very stable)

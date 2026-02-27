@@ -1,8 +1,10 @@
 import { motion } from "framer-motion";
 import { HiCheckBadge, HiShieldCheck, HiTruck } from "react-icons/hi2";
-import { T } from "../context/TranslationContext";
+import { T, useTranslation } from "../context/TranslationContext";
 
 const AboutUs = () => {
+  const { lang } = useTranslation();
+
   return (
     <section
       id="about"
@@ -11,7 +13,7 @@ const AboutUs = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
           <motion.div
-            initial={{ opacity: 0, x: -50 }}
+            initial={{ opacity: 0, x: lang === "ur" ? 50 : -50 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
@@ -34,7 +36,7 @@ const AboutUs = () => {
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               transition={{ delay: 0.4 }}
-              className="text-gray-400 text-xl leading-relaxed font-medium italic border-l-4 border-amber-500/30 pl-8"
+              className="text-gray-400 text-xl leading-relaxed font-medium italic border-s-4 border-amber-500/30 ps-8"
             >
               <T>
                 "Our trunks don't just hold belongings; they safeguard
@@ -86,11 +88,11 @@ const AboutUs = () => {
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, x: 50 }}
+            initial={{ opacity: 0, x: lang === "ur" ? -50 : 50 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="relative group lg:pl-10"
+            className="relative group lg:ps-10"
           >
             <div className="aspect-[4/5] rounded-[4rem] overflow-hidden border-8 border-white/5 relative z-10 shadow-2xl">
               <img
