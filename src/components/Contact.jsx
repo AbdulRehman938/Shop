@@ -5,7 +5,8 @@ import { T, useTranslation } from "../context/TranslationContext";
 import { useState, useEffect } from "react";
 
 const Contact = () => {
-  const { t } = useTranslation();
+  const { t, lang } = useTranslation();
+  const isUrdu = lang === "ur";
   const [placeholders, setPlaceholders] = useState({
     name: "Your Name",
     phone: "Phone Number",
@@ -48,7 +49,7 @@ const Contact = () => {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24">
           <motion.div
-            initial={{ opacity: 0, x: -50 }}
+            initial={{ opacity: 0, x: isUrdu ? 50 : -50 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
@@ -82,7 +83,7 @@ const Contact = () => {
                 ].map((item, idx) => (
                   <motion.div
                     key={idx}
-                    whileHover={{ x: 10 }}
+                    whileHover={{ x: isUrdu ? -10 : 10 }}
                     className="flex items-start gap-5 cursor-default"
                   >
                     <div
@@ -105,7 +106,7 @@ const Contact = () => {
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, x: 50 }}
+            initial={{ opacity: 0, x: isUrdu ? -50 : 50 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
